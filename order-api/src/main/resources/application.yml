@@ -1,0 +1,31 @@
+server:
+  port: 9060
+
+security:
+  oauth2:
+    client:
+      #这里的数据和数据库表中记录对应
+      client-id: orderServer
+      client-secret: 123456
+    resource:
+      jwt:
+        #这条配置的源码在TokenKeyEndpoint类中
+        key-uri: http://auth.yibo.com:9090/oauth/token_key
+spring:
+  application:
+    name: orderServer
+  cloud:
+    sentinel:
+      transport:
+        port: 8719
+        dashboard: localhost:8080
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        # 指定namespace 这个可以做到开发环境，预发环境，线上环境的隔离，同环境才可以调用
+        namespace: cede430e-9610-42ba-9a1e-11bd98ab747e
+
+feign:
+  sentinel:
+    #为feign整合Sentinel
+    enabled: true

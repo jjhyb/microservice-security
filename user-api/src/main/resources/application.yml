@@ -1,0 +1,16 @@
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/microservice-security?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    hikari:
+      username: root
+      password: yibo
+      # mysql 6.x以上 com.mysql.cj.jdbc.Driver
+      # mysql 5.x com.mysql.jdbc.Driver
+      driver-class-name: com.mysql.jdbc.Driver
+mybatis:
+  type-aliases-package: com.yibo.userapi.domain.entity
+  mapper-locations: classpath:mapper/*.xml
+mapper:
+  identity: MYSQL
+  not-empty: false

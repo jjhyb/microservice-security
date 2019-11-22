@@ -1,0 +1,11 @@
+server:
+  port: 8080
+zuul:
+  routes:
+    #转发api开头的请求
+    api:
+      url: http://gateway.yibo.com:9070
+  sensitive-headers:
+spring:
+  application:
+    name: frontend

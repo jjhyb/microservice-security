@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yibo.userapi.mapper.MeUserMapper">
+  <resultMap id="BaseResultMap" type="com.yibo.userapi.domain.entity.MeUser">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="permissions" jdbcType="VARCHAR" property="permissions" />
+    <result column="sex" jdbcType="CHAR" property="sex" />
+    <result column="phone" jdbcType="INTEGER" property="phone" />
+    <result column="head_portrait" jdbcType="VARCHAR" property="headPortrait" />
+    <result column="account_non_expired" jdbcType="CHAR" property="accountNonExpired" />
+    <result column="account_non_locked" jdbcType="CHAR" property="accountNonLocked" />
+    <result column="credentials_non_expired" jdbcType="CHAR" property="credentialsNonExpired" />
+    <result column="enabled" jdbcType="CHAR" property="enabled" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+</mapper>

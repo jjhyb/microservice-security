@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+<configuration>
+
+    <include resource="org/springframework/boot/logging/logback/base.xml" />
+
+    <appender  name="KAFKA" CLASS="com.github.danielwegener.logback.kafka.KafkaAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+            <chatset>UTF-8</chatset>
+        </encoder>
+        <topic>test</topic>
+        <!---->
+        <keyingStrategy class="com.github.danielwegener.logback.kafka.keying.NoKeyKeyingStrategy"></keyingStrategy>
+        <!--如果kafka不可用直接将日志打印到控制台-->
+        <deliveryStrategy class="com.github.danielwegener.logback.kafka.delivery.AsynchronousDeliveryStrategy"></deliveryStrategy>
+        <!--kafka服务器的地址-->
+        <producerConfig>bootstrap.servers=192.168.0.10:9092</producerConfig>
+        <appender-ref ref="CONSOLE"/>
+    </appender>
+
+    <!--两个appender配置选一个使用即可-->
+    <appender name="kafkaAppender" class="com.github.danielwegener.logback.kafka.KafkaAppender">
+        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder" >
+            <customFields>{"appname":"webdemo"}</customFields>
+            <includeMdc>true</includeMdc>
+            <includeContext>true</includeContext>
+            <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
+                <maxDepthPerThrowable>30</maxDepthPerThrowable>
+                <rootCauseFirst>true</rootCauseFirst>
+            </throwableConverter>
+        </encoder>
+        <topic>loges</topic>
+        <keyingStrategy class="com.github.danielwegener.logback.kafka.keying.HostNameKeyingStrategy" />
+        <deliveryStrategy class="com.github.danielwegener.logback.kafka.delivery.AsynchronousDeliveryStrategy" />
+        <producerConfig>bootstrap.servers=127.0.0.1:9092</producerConfig>
+        <!-- 不要等broker确认收到到消息。  -->
+        <producerConfig>acks=0</producerConfig>
+        <!-- 在批量发送日志消息之前，请等待1000毫秒并收集日志消息 -->
+        <producerConfig>linger.ms=1000</producerConfig>
+        <!-- 即使生产者缓冲区已满，也不要阻止应用程序，而是开始丢弃消息 -->
+        <!--<producerConfig>max.block.ms=0</producerConfig>-->
+        <producerConfig>block.on.buffer.full=false</producerConfig>
+        <!-- kafka连接失败后，使用下面配置进行日志输出 -->
+        <appender-ref ref="STDOUT" />
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="KAFKA" />
+        <appender-ref ref="CONSOLE" />
+    </root>
+</configuration>
